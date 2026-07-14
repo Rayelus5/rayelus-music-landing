@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RAYELUS — ATLAS · Out Now</title>
+    <meta
+      name="description"
+      content="ATLAS, the debut album by Rayelus. 18 electronic tracks. Preview every song and listen to the full album on Spotify."
+    />
+    <meta property="og:title" content="RAYELUS — ATLAS · Out Now" />
+    <meta
+      property="og:description"
+      content="18 electronic tracks. Preview every song, unlock the full album on Spotify."
+    />
+    <meta property="og:type" content="music.album" />
+    <meta property="og:image" content="/images/atlas-cover-og.webp" />
+    <link rel="icon" type="image/png" href="/images/favicon.png" />
+    <link
+      rel="preload"
+      href="/fonts/Gotham Book.otf"
+      as="font"
+      type="font/otf"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/Gotham Ultra.otf"
+      as="font"
+      type="font/otf"
+      crossorigin
+    />
+  </head>
+  <body>
+    <script>
+      // Apply the saved theme before first paint to avoid a light-mode flash
+      if (localStorage.getItem('rayelus-theme') === 'dark') {
+        document.documentElement.classList.add('dark')
+      }
+    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,132 @@
+@import "tailwindcss";
+
+/* Gotham — the site's single typeface. Only the weights actually used are
+   loaded (400 body, 500 labels/medium, 700 headings/buttons); no italics. */
+@font-face {
+  font-family: "Gotham";
+  src: url("/fonts/Gotham Book.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Gotham";
+  src: url("/fonts/Gotham Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Gotham";
+  src: url("/fonts/Gotham Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+/* Ultra — heaviest weight, used only for headings/titles. The range keeps any
+   font-weight utility (e.g. font-bold) resolving to this single face. */
+@font-face {
+  font-family: "Gotham Ultra";
+  src: url("/fonts/Gotham Ultra.otf") format("opentype");
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Palette derived from the ATLAS artwork: silver booklet (light) / deep cover blue (dark) */
+:root {
+  --c-bg: #ebf1f7;
+  --c-surface: #ffffff;
+  --c-ink: #0c2d4d;
+  --c-ink-soft: #46688c;
+  --c-brand: #1c6ea8;
+  --c-brand-deep: #12456e;
+  --c-glow: #1ba7cf;
+  --c-line: rgb(12 45 77 / 0.14);
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--c-ink-soft) var(--c-bg);
+  scrollbar-gutter: stable both-edges;
+}
+
+.dark {
+  --c-bg: #06131e;
+  --c-surface: #0c2334;
+  --c-ink: #e8f2fa;
+  --c-ink-soft: #8fb3cc;
+  --c-brand: #57ade0;
+  --c-brand-deep: #b7dcf2;
+  --c-glow: #46cff2;
+  --c-line: rgb(232 242 250 / 0.14);
+}
+
+@theme inline {
+  --color-bg: var(--c-bg);
+  --color-surface: var(--c-surface);
+  --color-ink: var(--c-ink);
+  --color-ink-soft: var(--c-ink-soft);
+  --color-brand: var(--c-brand);
+  --color-brand-deep: var(--c-brand-deep);
+  --color-glow: var(--c-glow);
+  --color-line: var(--c-line);
+  --color-spotify: #1db954;
+
+  --font-display: "Gotham Ultra", "Gotham", "Century Gothic", system-ui, sans-serif;
+  --font-body: "Gotham", "Century Gothic", system-ui, sans-serif;
+  --font-mono: "Gotham", "Century Gothic", system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--c-bg);
+  color: var(--c-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 300ms ease, color 300ms ease;
+}
+
+::selection {
+  background: var(--c-glow);
+  color: #06131e;
+}
+
+@keyframes atlas-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-disc {
+  animation: atlas-spin 14s linear infinite;
+}
+
+/* Chrome-gradient text, echoing the metallic ATLAS logo */
+.text-chrome {
+  background: linear-gradient(
+    180deg,
+    var(--c-brand-deep) 0%,
+    var(--c-glow) 52%,
+    var(--c-brand) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
