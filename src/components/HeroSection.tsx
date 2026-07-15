@@ -47,9 +47,9 @@ export default function HeroSection({ player }: { player: AudioPlayer }) {
           <img
             src="/images/title.png"
             alt={ALBUM.title}
-            width={978}
-            height={325}
-            className="mx-auto block h-auto w-[min(92vw,680px)] drop-shadow-xl"
+            width={1305}
+            height={434}
+            className="mx-auto block h-auto w-[min(96vw,820px)] drop-shadow-xl"
           />
         </h1>
         <p className="mx-auto mt-6 max-w-xl text-lg text-ink-soft">
