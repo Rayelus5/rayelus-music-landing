@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { useReducedMotion } from 'motion/react'
 import { FaSpotify } from 'react-icons/fa6'
 import Modal from './Modal'
-import { useReleaseGate } from './ReleaseGate'
 import { ALBUM } from '../data/tracks'
 import { spotify } from '../data/links'
 import { isReleased, RELEASE_LABEL } from '../data/release'
@@ -13,7 +12,6 @@ const OPEN_DELAY_MS = 900
 export default function AlbumPopup() {
   const [open, setOpen] = useState(false)
   const reducedMotion = useReducedMotion()
-  const { shouldGate, openComingSoon } = useReleaseGate()
   const released = isReleased()
 
   // Show once per browsing session, after a short beat so the page paints first.
@@ -26,14 +24,6 @@ export default function AlbumPopup() {
   const close = () => {
     sessionStorage.setItem(SESSION_KEY, '1')
     setOpen(false)
-  }
-
-  const onSpotifyClick = (e: React.MouseEvent) => {
-    close()
-    if (shouldGate(spotify.album)) {
-      e.preventDefault()
-      openComingSoon()
-    }
   }
 
   return (
@@ -65,7 +55,7 @@ export default function AlbumPopup() {
           href={spotify.album}
           target="_blank"
           rel="noopener noreferrer"
-          onClick={onSpotifyClick}
+          onClick={close}
           className="mt-6 flex w-full items-center justify-center gap-3 rounded-full bg-spotify px-6 py-3.5 font-mono text-sm font-bold uppercase tracking-widest text-[#06131e] transition-transform duration-200 hover:scale-[1.02] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-glow"
         >
           <FaSpotify size={18} aria-hidden />
