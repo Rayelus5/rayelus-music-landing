@@ -1,4 +1,4 @@
-import { motion } from 'motion/react'
+import { motion, useReducedMotion } from 'motion/react'
 import { FaSpotify } from 'react-icons/fa6'
 import CDPlayer from './CDPlayer'
 import TrackList from './TrackList'
@@ -9,21 +9,48 @@ import type { AudioPlayer } from '../hooks/useAudioPlayer'
 
 export default function HeroSection({ player }: { player: AudioPlayer }) {
   const currentTrack = tracks.find((t) => t.n === player.currentN)
+  const reducedMotion = useReducedMotion()
 
   return (
     <section id="album" className="relative overflow-hidden">
-      {/* Centered hero pitch */}
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
-        className="mx-auto flex max-w-3xl flex-col items-center px-4 pt-28 text-center sm:px-6 sm:pt-32 lg:pt-40"
-      >
+      {/* Hero pitch over a looping video backdrop */}
+      <div className="relative">
+        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+          {!reducedMotion && (
+            <video
+              className="size-full object-cover"
+              src="/bg-animated.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              aria-hidden
+              tabIndex={-1}
+            />
+          )}
+          {/* readability scrim + melt into the page background at top and bottom */}
+          <div className="absolute inset-0 bg-bg/40" />
+          <div className="absolute inset-0 bg-gradient-to-b from-bg/60 via-bg/10 to-bg" />
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          className="relative mx-auto flex max-w-3xl flex-col items-center px-4 pb-16 pt-28 text-center sm:px-6 sm:pt-32 lg:pt-40"
+        >
         <p className="font-mono text-xs uppercase tracking-[0.35em] text-ink-soft">
           Debut album · {isReleased() ? 'Out now' : RELEASE_LABEL}
         </p>
-        <h1 className="mt-5 font-display text-7xl font-bold tracking-tight text-chrome sm:text-8xl">
-          {ALBUM.title}
+        <h1 className="mt-5">
+          <img
+            src="/images/title.png"
+            alt={ALBUM.title}
+            width={978}
+            height={325}
+            className="mx-auto block h-auto w-[min(92vw,680px)] drop-shadow-xl"
+          />
         </h1>
         <p className="mx-auto mt-6 max-w-xl text-lg text-ink-soft">
           {ALBUM.trackCount} electronic tracks by {ALBUM.artist}. Preview every song right
@@ -54,7 +81,8 @@ export default function HeroSection({ player }: { player: AudioPlayer }) {
             ? `Now previewing — ${String(currentTrack.n).padStart(2, '0')} ${currentTrack.title} ${currentTrack.zh}`
             : `18 songs · Produced by ${ALBUM.artist} · ${ALBUM.year}`}
         </p>
-      </motion.div>
+        </motion.div>
+      </div>
 
       {/* Tracklist */}
       <div className="mx-auto mt-20 max-w-6xl px-4 sm:px-6 lg:mt-28">
